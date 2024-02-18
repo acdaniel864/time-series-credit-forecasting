@@ -29,7 +29,7 @@ def plot_time_series(df, columns, title = 'Time Series Plot', acc=False, pacf=Fa
         plt.plot(df.index, df[column], label=column)
 
     if covid_start:
-        plt.axvline(pd.Timestamp('2020-02-01'), color='grey', linestyle='--', lw=2, label='COVID-19 Start')
+        plt.axvline(pd.Timestamp('2020-02-01'), color='grey', linestyle='--', lw=1, label='COVID-19 Start')
 
 
     plt.gca().xaxis.set_major_locator(mdates.YearLocator())  # set major locator to every year.
