@@ -4,29 +4,54 @@ Due: Tuesday, February 20th, 2024 at 9 AM ET
 
 ## Table of Contents
 
+-Problem Statement
+-Technology Requirements
+-Data Acquisition
+-Executive Summary
+-Conclusion
+-Sources
+-Credits
+
 ## Problem Statement
 
 In such turbulent times when nothing is sure anymore, one's credit solvency is definitely at the top of the list. A well established credit agency in the USA reached out to our consulting firm (fict.) to explore trends in the market and try to identify factors that contribute to delinquency rates (people not paying their bills timely) and credit growth (annual percentage change in outstanding bank loans). Afterwards, the agency asked to forecast expected rates for at least a year into the future, to get a gauge of what to expect. Finally, any seasonal or other cyclical trends that may be useful to discover or confirm about the financial cycle would be desired to be seen as well.
 
 So, bottom line we hope to answer when are 'good times' for the producer to lend openly with little risk?
 
-Banks and policy makers are the designated audience for this study, putting a heavy emphasis on simplicity with any of the upcoming explorations and forecasting.
+Credit card companies and banks are the designated audience for this study, putting a heavy emphasis on simplicity with any of the upcoming explorations and forecasting. Policy makers are a secondardy audience, as with the current level of analysis we would be hesitant to push forth a law to try to have government intervention in the market.
+
+## Technology Requirements
+
+The following versions of Python packages were used, so please make appropriate accomonodations to be able to use them.
+
+Lumpy 0.3.1
+Maplotlib 3.7.2
+Numpy 1.24.3
+Pandas 2.0.3
+Pmdarima 2.0.4
+Scikit-learn 1.3.0
+Seaborn 0.12.2
+Shap 0.44.1
+Statsmodels 0.14.0
+Sys 3.12.2
+
+## Data Acquisition
+
+We primarily used US government economic data from the following sources:
+- Bureau of Labour Statistics (bls.gov)
+- Bureau of Economic Analysis (bea.gov)
+- New York Fed
+- St Louis Fed/ Federal Reserve Economic Data
+- Fed Reserve Board
+The data was reliable and clean, but much of it was only available on a quarterly basis and given the relatively short length of available data (post 2000), we had to use monthly data in order to have a sufficiently large dataset. As such, we had to interpolate (ie create entries from Q1 to Q2 using April = March + ((Q2-Q1)/3) between quarterly data to create monthly comparable entries.
+We used the BLS and BEA API and manually downloaded the data from the NY and St Louis Fed manually in csv format.
+Along the way, curiousity naturally gripped us and we ploted distributions and sought to find relevant insights in the data (see below). Eventually, we combined everything into one dataframe, 'final_dataset'.
 
 ## Executive Summary
 For the sake of simplicity regading the General Assembly project, it was decided to itemize each participant's work and write their own executive summary.
 
 ### Executive Summary - Aaran Daniel
-#### Technology: 
-pandas, lumpy, matplotlib, seaboard, sys, scikit-learn, pmdarima, statsmodels
-#### Data:
-From St Louis Fed, fred.stlouisfed.org: Fed Funds rate monthly, nominal GDP,
-#### Cleaning:
-Cleaned data from Bureau of Labour Statistics, plotting distributions
-Cleaned Bureau of Economic Analysis data which contained monthly information on income, tax, benefits and savings for the US economy wide.
-Cleaned credit card delinquency, credit card balances and 30 year mortgage data.
-Cleaned FRB monthly consumer credit data.
-Combined all the above into one master data frame.
-#### EDA:
+#### EDA
 Understanding the economic context: inflation, credit, disposable income:
 CPI slightly left skewed, centred around mean of 2.53%, slightly above FED target of 2%.
 GDP annual 4.37% average. Range of -6.9 to 17%. Huge fall in GDP growth in the wake of covid then a recovery mid 2020 through to early 2021.
@@ -35,17 +60,7 @@ Early 2022 fed begins to hike rates to highs not seen since the 2008 crisis.
 Median annual disposable income of $41,000 (chained 2017)
 
 ### Executive Summary - Steven Goulden
-#### Technology:
-pandas, lumpy, matplotlib, seaboard, sys, scikit-learn, pmdarima, statsmodels
-#### Data Collection:
-We primarily used US government economic data from the following sources.
-- Bureau of Labour Statistics (bls.gov)
-- Bureau of Economic Analysis (bea.gov)
-- New York Fed
-- St Louis Fed/ Federal Reserve Economic Data
-- Fed Reserve Board
-The data was reliable and clean, but much of it was only available on a quarterly basis and given the relatively short length of available data (post 2000), we had to use monthly data in order to have a sufficiently large dataset. As such, we had to interpolate (ie create entries from Q1 to Q2 using April = March + ((Q2-Q1)/3) between quarterly data to create monthly comparable entries.
-We used the BLS and BEA API and manually downloaded the data from the NY and St Louis Fed manually in csv format.
+
 #### EDA
 - We then looked at credit growth against CPI and its key components and it was interesting to see a clear positive correlation. This made broad intuitive sense as credit generally grows during periods of economic expansion, when inflation tends to be higher.
 [credit_vs_cpi.png]
@@ -74,51 +89,54 @@ We used the BLS and BEA API and manually downloaded the data from the NY and St 
 
 
 ### Executive Summary - Benjamin Wolff
-#### Technology Requirements
-BW ran the following versions of packages:
-Maplotlib 3.7.2
-Numpy 1.24.3
-Pandas 2.0.3
-Pmdarima 2.0.4
-Scikit-learn 1.3.0
-Seaborn 0.12.2
-Statsmodels 0.14.0
+
 #### Data
 BW used data from the Bureau of Labour Statistics, Bureau of Economic Analysis, New York Fed, St. Louis Fed, and the Federal Reserve Board.
 The main 'cleaning' BW was involved in from a data perspecive was trying to ensure that quarterly data remained distinct from monthly data, feeling it disengious and straying from the original data science project to linearly interpoltate between quarterly dates to theoetically get a more robust dataset. However, such changes are local to the relevant notebook.
 #### EDA
-Of worthiness for an Executive Summary is limited to BW's 'eda_i.ipynb'. Principal findngs include the following:
+Of worthiness for an Executive Summary is limited to BW's 'eda_iii.ipynb'. Principal findngs include the following:
 - Around 30 feature' are highly postively correlated with each other (2 of whom are negative; rest positive), being defined with a correlation of at least .5. This would imply an overwhelming 'dominoe effect' of one thing to fall after another. With out current analysis it is too pre-mature to focus on one 'cause' feature, if there is one at all.
 - The major focus of BW was spent on trying to analyize delinquency rates. Astonishngly, aside from the 30 and 90 day rates being incredibly close together (.96; which makes sense, basically suggesting that people that don't pay off their bills within 30 days probably still won't have them paid in 90 days), only one other feature was found to be significant (see above) - the yoy car consumption rate (interestingly negative). Another close second, being below the threshold for significant, was a federal funds rate at .48. Despite attempts to transform the data via root or logistic relationships, trends remained the same. So, it emerged that basically all features have nothing to do with delinquency rates (see below for more on this).
 #### Modeling
-BW focused on modeling delinquency rates, 30 and 90, with SARIMAX models, with the accompanying work found in his 'modeling_ii.ipynb'. Without even the presence of any exogenous (outside) variabls besides the flow of time and the delinquent rates, models were found to be accurate within .014 and .0218 of the mean absolute percentage error of the actual delinquency rates and later visually confirmed for accuracy.
+BW focused on modeling delinquency rates, 30 and 90, with SARIMAX models, with the accompanying work found in his 'modeling_ii.ipynb'. However, the reader can find a more polished version in the main 'time_series_plots3_delinquency.ipynb'. Anyways, without even the presence of any exogenous (outside) variabls besides the flow of time and the delinquent rates, models were found to be accurate within .014 and .0218 of the mean absolute percentage error of the actual delinquency rates and later visually confirmed for accuracy.
 Attempts were made to try to improve their accuracy by the addition of exogenous features (external features to our target that still effect its performance over time). However, no feature within the current dataset was found to be significant to further understanding of delinquency rate change. The bright side, however, is that this was already hinted at by the EDA stage when essentially no significant correlation the delinquents had with the numerous features.
 -Perplexingly, even yoy car consumption rate, despite its high correlation, did not improve accuracy. However, even this is somewhat understood via an earlier modling attempt ('modeling_i.ipynb') where via recursive feature elimination (RFE) this feature was one to be eliminated, implying a weak impact for whatever reason.
 It was debated to try a VAR model to graph both simultaneously, however ultimately rejected when defnitionally 90 day delinquents must first be 30 day delinquents.
 #### Conclusion
 So, it remains clear that delinquent rates are going up, a sign that more people are unable to pay their credit card bills and a prudent thing to do would be to raise interest rates and not be as open to lending money to others given the default greater risk. However, such results should likley be taken with at least a grain of salt when per our current analysis we were unsuccuesful in finding out what does influence delinquent rates.
 
+## Final Conclusion
+To make things a bit clearer, given the way the ESs were done:
+
+It was found that delinquent rates are expected to steadily rise up to 4.5 and 2.1 % in July of 2024. The presence of that would call for credit card companies and banks to increase lending rates and be relatively more cautious when lending to new customers whose creditworthiness is unknown. Meanwhile, overall credit growth is expected to increase, implying that more money is being lent out. Albeit the population is increasing, the prime factor for this would seem to be more people needing to borrow money for their purchases. So, naturally these two findings make sense to go hand in hand as the more that is being lent out the more likely it is to assume that more people are unable to pay off their loans.
+
+Although we did not forsee any 'golden time' to lend cheaply at little risk, we did confirm the general trend of risk vs. reward and feel confident in recommending that no matter the state of the economy, it is fine to lend - and one can confomrtably do so with increased rates of interest.
+
+So, in conclusion, companies can be comfortable lending out to more people - however assume that on average people are riskier and should be lent to at a higher rate.
+
+More work beckons to be done to properly identify which features contribute to delinquency and overall credit growth. Of particular interest to us would be to get more delinquency rates, if it is even possible, on a monthly basis and for a longer period of time.
+
+
 ## Sources
-### Data
 
+As we already said above, our data came from the following sources, with any data from them found in the 'data/non_final' part of the repository.
 
+- Bureau of Labour Statistics (bls.gov)
+- Bureau of Economic Analysis (bea.gov)
+- New York Fed
+- St Louis Fed/ Federal Reserve Economic Data
+- Fed Reserve Board
 
-https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.gettyimages.com%2Fphotos%2Fcrying-baby-office&psig=AOvVaw1m61EX851u1z2lLejR1Xhy&ust=1708467604181000&source=images&cd=vfe&opi=89978449&ved=2ahUKEwio48P2t7iEAxUzuIkEHX1ZD80QjRx6BAgAEBU
+- Sad picture of a man and his son: [https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.gettyimages.com%2Fphotos%2Fcrying-baby-office&psig=AOvVaw1m61EX851u1z2lLejR1Xhy&ust=1708467604181000&source=images&cd=vfe&opi=89978449&ved=2ahUKEwio48P2t7iEAxUzuIkEHX1ZD80QjRx6BAgAEBU]
 
-### Images
+## Contributions
 
+A special thanks to the following:
 
+Aaran Daniel for co-data wrangling and pre-processing, EDA, serving as our chief credit officer and visual coordinating and synthesis.
 
-?? add back table of contents?
+Steven Goulden for being the domain expert and guide, chief data wrangle officer, EDA and alternative solutions seeker.
 
-PS
-Economic Context
-Analysis and Findings
-modelling
-forcasting
-strategy guidance
-conclusion
-q and a
+Benjamin Wolff for statistical expertise and consultation, EDA, chief delinquent officer, repository manager, and chief organization officer.
 
-POST ON PUBLIC GIT
-    and tell the others...
+And, a thanks to the various GA instructors: Musfiqur Rahman, Eric Bayless, and Sonyah Seiden for additional wisedom and encouragement and guidance.
