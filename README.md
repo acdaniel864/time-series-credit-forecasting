@@ -2,6 +2,16 @@
 ### Project 5 by Aaran Daniel, Steven Goulden, and Bejamin Wolff for General Assembly's DSI
 Due: Tuesday, February 20th, 2024 at 9 AM ET
 
+## Table of Contents
+
+-Problem Statement
+-Technology Requirements
+-Data Acquisition
+-Executive Summary
+-Conclusion
+-Sources
+-Credits
+
 ## Problem Statement
 In such turbulent times when nothing is sure anymore, a leading credit agency in the United States has engaged our consulting team to analyze credit market trends, with a focus on identifying factors affecting delinquency rates and credit growth. Our task is to forecast these metrics for the upcoming year and identify any significant seasonal or cyclical trends that impact the financial cycle. This analysis aims to pinpoint optimal periods for low-risk lending. Targeting banks and policymakers, the project prioritizes clarity and succinctness in presenting actionable insights.
 Banks and policy makers are the designated target audience for this study.
