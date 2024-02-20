@@ -45,7 +45,7 @@ Pmdarima 2.0.4
 Scikit-learn 1.3.0
 Seaborn 0.12.2
 Statsmodels 0.14.0
-Sys 
+Sys 3.12.2
 
 ## Data Sources: 
 We primarily used US government economic data from the following sources.
