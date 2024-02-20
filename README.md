@@ -4,13 +4,13 @@ Due: Tuesday, February 20th, 2024 at 9 AM ET
 
 ## Table of Contents
 
--Problem Statement
--Technology Requirements
--Data Acquisition
--Executive Summary
--Conclusion
--Sources
--Credits
+-Problem Statement<br>
+-Technology Requirements<br>
+-Data Acquisition<br>
+-Executive Summary<br>
+-Conclusion<br>
+-Sources<br>
+-Credits<br>
 
 ## Problem Statement
 In such turbulent times when nothing is sure anymore, a leading credit agency in the United States has engaged our consulting team to analyze credit market trends, with a focus on identifying factors affecting delinquency rates and credit growth. Our task is to forecast these metrics for the upcoming year and identify any significant seasonal or cyclical trends that impact the financial cycle. This analysis aims to pinpoint optimal periods for low-risk lending. Targeting banks and policymakers, the project prioritizes clarity and succinctness in presenting actionable insights.
@@ -60,7 +60,7 @@ We used the BLS and BEA API and manually downloaded the data from the NY and St 
 ## Executive Summary
 For the sake of simplicity General Assembly EDA section is itemize by each participant's work.
 
-#### Cleaning: 
+### Cleaning: 
 **ACD & SG**:
 - Cleaned data from Bureau of Labour Statistics, plotting distributions
 - Cleaned Bureau of Economic Analysis data which contained monthly information on income, tax, benefits and savings for the US economy wide.
@@ -71,7 +71,7 @@ For the sake of simplicity General Assembly EDA section is itemize by each parti
 - Ensure that quarterly data remained distinct from monthly data, feeling it disengious and straying from the original data science project to linearly interpoltate between quarterly dates to theoetically get a more robust dataset. However, such changes are local to the relevant notebook.
 
 
-#### EDA:
+### EDA:
 **ACD:**
 - CPI is slightly left-skewed, centered around a mean of 2.53%, slightly above the FED's target of 2%.
 - GDP has an annual average of 4.37%, with a range from -6.9 to 17%. There was a significant drop in GDP growth due to COVID, followed by a recovery from mid-2020 through early 2021.
@@ -104,7 +104,7 @@ Of worthiness for an Executive Summary is limited to BW's 'eda_i.ipynb'. Princip
 - The major focus of BW was spent on trying to analyze delinquency rates. Astonishingly, aside from the 30 and 90 day rates being incredibly close together (.96; which makes sense, basically suggesting that people that don't pay off their bills within 30 days probably still won't have them paid in 90 days), only one other feature was found to be significant (see above) - the year-over-year car consumption rate (interestingly negative). Another close second, being below the threshold for significance, was the federal funds rate at .48. Despite attempts to transform the data via root or logistic relationships, trends remained the same. So, it emerged that basically all features have nothing to do with delinquency rates (see below for more on this).
 
 
-#### Forecasting Credit Growth - SARIMAX Model (ACD):
+### Forecasting Credit Growth - SARIMAX Model (ACD):
 - Modelled with test split of 0.15% which equates to circa 3.5 years our of 23. Starting the predictions in 2020-07-01 - 5 months after the start of covid. 
 - Built baseline ARIMA model with no exogenous variables and no hyper parameter tuning. Model was poor at fitting trend of data. AIC = 506.
 - Including hyper parameter tuning (via auto_arima) saw some minor improvement in model performance. AIC = 503.
@@ -118,13 +118,13 @@ Of worthiness for an Executive Summary is limited to BW's 'eda_i.ipynb'. Princip
 - Although perhaps we cannot completely trust the amplitude of the forecasts, we have seen that the model even when predicting precovid is largely directionally correct. 
 - On this basis we would advice the credit card company we are consulting to plan for negative credit growth over the coming 12 months. 
 
-#### Forecasting 90 Day Credit Delinquency - SARIMAX Model (BW):
+### Forecasting 90 Day Credit Delinquency - SARIMAX Model (BW):
 BW focused on modeling delinquency rates, 30 and 90, with SARIMAX models, with the accompanying work found in his 'modeling_ii.ipynb'. Without even the presence of any exogenous (outside) variabls besides the flow of time and the delinquent rates, models were found to be accurate within .014 and .0218 of the mean absolute percentage error of the actual delinquency rates and later visually confirmed for accuracy.
 Attempts were made to try to improve their accuracy by the addition of exogenous features (external features to our target that still effect its performance over time). However, no feature within the current dataset was found to be significant to further understanding of delinquency rate change. The bright side, however, is that this was already hinted at by the EDA stage when essentially no significant correlation the delinquents had with the numerous features.
 -Perplexingly, even yoy car consumption rate, despite its high correlation, did not improve accuracy. However, even this is somewhat understood via an earlier modling attempt ('modeling_i.ipynb') where via recursive feature elimination (RFE) this feature was one to be eliminated, implying a weak impact for whatever reason.
 It was debated to try a VAR model to graph both simultaneously, however ultimately rejected when defnitionally 90 day delinquents must first be 30 day delinquents.
 
-#### Modeling Credit & Delinquency - Linear Regression, SVR, Random Forests (SG)::
+### Modeling Credit & Delinquency - Linear Regression, SVR, Random Forests (SG)::
 - We then built our first model to predict credit growth and for Lasso and Ridge linear regression and achieved a cross validation score of 0.5, with random forests achieving 0.83 and SVR achieving 0.89
 - We can see that as credit card rates have been rising over the last 10 years, this in conjunction with higher balances has driven a significant increase in annual credit card servicing costs. The same can be said for mortgage servicing costs. 
 ![credit_card_servicing](images/[credit_card_servicing.png])
@@ -165,18 +165,18 @@ Our client should expect a difficult lending environment in the coming months wi
 
 ## Sources:
 **Data:**
-https://fred.stlouisfed.org/
-https://www.stlouisfed.org/
-https://www.bea.gov/
-https://fred.stlouisfed.org/series/FEDFUNDS
+- [Federal Reserve Economic Data - FRED](https://fred.stlouisfed.org/)
+- [St. Louis Federal Reserve](https://www.stlouisfed.org/)
+- [Bureau of Economic Analysis (BEA)](https://www.bea.gov/)
+- [FEDFUNDS Series at FRED](https://fred.stlouisfed.org/series/FEDFUNDS)
 
 **Other:**
-https://www.cbpp.org/research/policy-basics-where-do-our-federal-tax-dollars-go
-https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.gettyimages.com%2Fphotos%2Fcrying-baby-office&psig=AOvVaw1m61EX851u1z2lLejR1Xhy&ust=1708467604181000&source=images&cd=vfe&opi=89978449&ved=2ahUKEwio48P2t7iEAxUzuIkEHX1ZD80QjRx6BAgAEBU
-- https://www.whitehouse.gov/omb/briefing-room/2023/10/20/joint-statement-of-janet-l-yellen-secretary-of-the-treasury-and-shalanda-d-young-director-of-the-office-of-management-and-budget-on-budget-results-for-fiscal-year-2023/#:~:text=After%20atypically%20strong%20growth%20in,with%20projections%20made%20after%20the 
-https://www.geeksforgeeks.org/how-to-convert-datetime-to-date-in-pandas/
-https://www.datacamp.com/tutorial/introduction-to-shap-values-machine-learning-interpretability
-https://towardsdatascience.com/using-shap-values-to-explain-how-your-machine-learning-model-works-732b3f40e137 
-https://www.fool.com/the-ascent/research/average-household-debt/
-https://www.experian.com/blogs/ask-experian/research/consumer-debt-study/#:~:text=The%20total%20U.S.%20consumer%20debt,increase%20from%202021%20to%202022.
-https://www.geeksforgeeks.org/numpy-sqrt-in-python/
+- [Policy Basics: Where Do Our Federal Tax Dollars Go? - CBPP](https://www.cbpp.org/research/policy-basics-where-do-our-federal-tax-dollars-go)
+- [Getty Images: Crying Baby in Office](https://www.gettyimages.com/photos/crying-baby-office)
+- [Joint Statement of Janet L. Yellen, Secretary of the Treasury, and Shalanda D. Young, Director of the Office of Management and Budget on Budget Results for Fiscal Year 2023 - White House](https://www.whitehouse.gov/omb/briefing-room/2023/10/20/joint-statement-of-janet-l-yellen-secretary-of-the-treasury-and-shalanda-d-young-director-of-the-office-of-management-and-budget-on-budget-results-for-fiscal-year-2023/)
+- [How to Convert DateTime to Date in Pandas - GeeksforGeeks](https://www.geeksforgeeks.org/how-to-convert-datetime-to-date-in-pandas/)
+- [Introduction to SHAP Values (Machine Learning Interpretability) - DataCamp](https://www.datacamp.com/tutorial/introduction-to-shap-values-machine-learning-interpretability)
+- [Using SHAP Values to Explain How Your Machine Learning Model Works - Towards Data Science](https://towardsdatascience.com/using-shap-values-to-explain-how-your-machine-learning-model-works-732b3f40e137)
+- [Average Household Debt - The Ascent by Motley Fool](https://www.fool.com/the-ascent/research/average-household-debt/)
+- [Consumer Debt Study - Experian](https://www.experian.com/blogs/ask-experian/research/consumer-debt-study/#:~:text=The%20total%20U.S.%20consumer%20debt,increase%20from%202021%20to%202022.)
+- [NumPy sqrt in Python - GeeksforGeeks](https://www.geeksforgeeks.org/numpy-sqrt-in-python/)
