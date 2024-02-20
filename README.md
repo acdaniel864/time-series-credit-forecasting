@@ -19,23 +19,23 @@ Banks and policy makers are the designated target audience for this study.
 ## Question:
 What do the next 12 months look like for lenders in the US?
 
-## Order of Workflow: 
-**Data and Cleaning files:**
-AD: cleaning_acd.ipynb
-AD: cleaning_acd 2.ipynb
-BW: data_gathering.ipynb
-BW: dataexploration_i_BW.ipynb
-BW: dta_ii.ipynb
-**EDA:**
-AD: eda_inflation_credit_acd.ipynb
-AD: eda_tax_gov_benefits_acd.ipynb
-BW: eda_i.ipynb
-SG: EDA_U_Shelter_Energy_Food_Wages_SG.ipynb
-SG: Shap_analysis.ipynb
-**Modelling:**
-AD: modelling_ACD.ipynb
-BW: modelling_i.ipynb
-BW: modelling_ii.ipynb
+## Order of Workflow:<br>
+**Data and Cleaning files:** <br>
+AD: cleaning_acd.ipynb<br>
+AD: cleaning_acd 2.ipynb<br>
+BW: data_gathering.ipynb<br>
+BW: dataexploration_i_BW.ipynb<br>
+BW: dta_ii.ipynb<br>
+**EDA:**<br>
+AD: eda_inflation_credit_acd.ipynb<br>
+AD: eda_tax_gov_benefits_acd.ipynb<br>
+BW: eda_i.ipynb<br>
+SG: EDA_U_Shelter_Energy_Food_Wages_SG.ipynb<br>
+SG: Shap_analysis.ipynb<br>
+**Modelling:**<br>
+AD: modelling_ACD.ipynb<br>
+BW: modelling_i.ipynb<br>
+BW: modelling_ii.ipynb<br>
 
 ## Technology Requirements:
 Maplotlib 3.7.2
