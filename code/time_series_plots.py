@@ -24,7 +24,7 @@ def plot_time_series(df, columns, title = 'Time Series Plot', acc=False, pacf=Fa
     sns.set_style("darkgrid")
 
     # plot each column on the same time plot
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(11, 8))
     for column in columns:
         plt.plot(df.index, df[column], label=column)
 
